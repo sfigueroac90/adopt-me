@@ -1,4 +1,4 @@
-/* global React ReactDOM */
+/* global React ReactDOM document */
 
 const Pet = (props) => {
   return React.createElement("div", {}, [
