@@ -33230,7 +33230,47 @@ const Pet = props => {
 
 var _default = Pet;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"SearchParams.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"useBreedList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = useBreedList;
+
+var _react = require("react");
+
+const localCache = {};
+
+function useBreedList(animal) {
+  const [breedList, setBreedList] = (0, _react.useState)([]);
+  const [status, setStatus] = (0, _react.useState)("unload");
+  (0, _react.useEffect)(() => {
+    if (!animal) {
+      setBreedList([]);
+    } else if (localCache[animal]) {
+      setBreedList(localCache[animal]);
+    } else {
+      requestBreedList();
+    }
+  }, [animal]);
+
+  async function requestBreedList() {
+    setBreedList([]);
+    setStatus("loading");
+    const dir = `http://pets-v2.dev-apis.com/breeds?animal=${animal}`;
+    console.log(dir);
+    const res = await fetch(dir);
+    const json = await res.json();
+    console.log(json);
+    localCache[animal] = json.breeds || [];
+    setBreedList(localCache[animal]);
+    setStatus("loaded");
+  }
+
+  return [breedList, status];
+}
+},{"react":"../node_modules/react/index.js"}],"SearchParams.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33244,6 +33284,8 @@ var _react = require("react");
 
 var _Pet = _interopRequireDefault(require("./Pet"));
 
+var _useBreedList = _interopRequireDefault(require("./useBreedList"));
+
 var _jsxRuntime = require("react/jsx-runtime");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -33254,11 +33296,11 @@ const SearchParams = () => {
   const [location, setLocation] = (0, _react.useState)("");
   const [animal, setAnimal] = (0, _react.useState)("");
   const [breed, setBreed] = (0, _react.useState)("");
+  const [breeds, status] = (0, _useBreedList.default)(animal);
   const [pets, setPets] = (0, _react.useState)([]);
-  const BREEDS = [];
   (0, _react.useEffect)(() => {
     requestPets();
-  });
+  }, []);
 
   async function requestPets() {
     const dir = `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`;
@@ -33274,7 +33316,7 @@ const SearchParams = () => {
     /*#__PURE__*/
     (0, _jsxRuntime.jsxs)("div", {
       className: "search-params",
-      children: [isRaining,
+      children: [isRaining, " - ", status,
       /*#__PURE__*/
       (0, _jsxRuntime.jsxs)("form", {
         children: [
@@ -33325,7 +33367,7 @@ const SearchParams = () => {
             /*#__PURE__*/
             (0, _jsxRuntime.jsx)("option", {
               value: ""
-            }), BREEDS.map(breed =>
+            }), breeds.map(breed =>
             /*#__PURE__*/
             (0, _jsxRuntime.jsx)("option", {
               children: breed
@@ -33349,7 +33391,7 @@ const SearchParams = () => {
 
 var _default = SearchParams;
 exports.default = _default;
-},{"q":"../node_modules/q/q.js","react":"../node_modules/react/index.js","./Pet":"Pet.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
+},{"q":"../node_modules/q/q.js","react":"../node_modules/react/index.js","./Pet":"Pet.js","./useBreedList":"useBreedList.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
