@@ -1,12 +1,29 @@
-import { useState } from "react";
+import { async } from "q";
+import { useEffect, useState } from "react";
+import Pet from "./Pet"
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
-const BREEDS = [];
+
 
 const SearchParams = () => {
-  const [location, setLocation] = useState("Seattle, WA");
-  const [animal, setAnimal] = useState("dog");
+  const [location, setLocation] = useState("");
+  const [animal, setAnimal] = useState("");
   const [breed, setBreed] = useState("");
+  const [pets, setPets] = useState([]);
+  const BREEDS = [];
+  
+  useEffect(()=>{
+    requestPets();
+  })
+
+  async function requestPets(){
+    const dir = `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`;
+    console.log("Dir:" + dir)
+    const res = await fetch(dir)
+    const json = await res.json();
+    console.log(json)
+    setPets(json.pets);
+  }
 
   const isRaining = location === "Seattle, WA" ? "Raining" : "Not raining";
   return (
@@ -53,6 +70,10 @@ const SearchParams = () => {
         </label>
         <button>Submmit</button>
       </form>
+      {
+        pets.map((pet) => ( <Pet  name={pet.name} animal={pet.animal} breed={pet.breed} key={pet.id} /> )
+          )
+      }
     </div>
   );
 };
