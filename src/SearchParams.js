@@ -2,6 +2,7 @@ import { async } from "q";
 import { useEffect, useState } from "react";
 import Pet from "./Pet"
 import useBreedList from "./useBreedList";
+import Results from "./Results";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
@@ -30,10 +31,18 @@ const SearchParams = () => {
   return (
     <div className="search-params">
       {isRaining} - {status} 
-      <form>
+      <form
+        onSubmit={
+          e => {
+            e.preventDefault();
+            requestPets();
+          }
+        }
+      >
         <label htmlFor="location">
           <input
             id="location"
+            onCut={e => console.log("Cutted")}
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Location"
@@ -71,10 +80,10 @@ const SearchParams = () => {
         </label>
         <button>Submmit</button>
       </form>
-      {
-        pets.map((pet) => ( <Pet  name={pet.name} animal={pet.animal} breed={pet.breed} key={pet.id} /> )
-          )
-      }
+      <Results pets={pets} />
+
+
+      
     </div>
   );
 };

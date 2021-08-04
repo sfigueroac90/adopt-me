@@ -33270,7 +33270,51 @@ function useBreedList(animal) {
 
   return [breedList, status];
 }
-},{"react":"../node_modules/react/index.js"}],"SearchParams.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"Results.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _Pet = _interopRequireDefault(require("./Pet"));
+
+var _jsxRuntime = require("react/jsx-runtime");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+const Results = ({
+  pets
+}) => {
+  return (
+    /*#__PURE__*/
+    (0, _jsxRuntime.jsx)("div", {
+      className: "search",
+      children: !pets.length ?
+      /*#__PURE__*/
+      (0, _jsxRuntime.jsx)("h1", {
+        children: "Not found pets"
+      }) : pets.map(pet => {
+        return (
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsx)(_Pet.default, {
+            amimal: pet.animal,
+            name: pet.name,
+            breed: pet.breed,
+            images: pet.image,
+            location: `${pet.city}, ${pet.state}`,
+            id: pet.id
+          }, pet.id)
+        );
+      })
+    })
+  );
+};
+
+var _default = Results;
+exports.default = _default;
+},{"./Pet":"Pet.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"SearchParams.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33285,6 +33329,8 @@ var _react = require("react");
 var _Pet = _interopRequireDefault(require("./Pet"));
 
 var _useBreedList = _interopRequireDefault(require("./useBreedList"));
+
+var _Results = _interopRequireDefault(require("./Results"));
 
 var _jsxRuntime = require("react/jsx-runtime");
 
@@ -33319,6 +33365,10 @@ const SearchParams = () => {
       children: [isRaining, " - ", status,
       /*#__PURE__*/
       (0, _jsxRuntime.jsxs)("form", {
+        onSubmit: e => {
+          e.preventDefault();
+          requestPets();
+        },
         children: [
         /*#__PURE__*/
         (0, _jsxRuntime.jsx)("label", {
@@ -33327,6 +33377,7 @@ const SearchParams = () => {
           /*#__PURE__*/
           (0, _jsxRuntime.jsx)("input", {
             id: "location",
+            onCut: e => console.log("Cutted"),
             value: location,
             onChange: e => setLocation(e.target.value),
             placeholder: "Location"
@@ -33378,20 +33429,18 @@ const SearchParams = () => {
         (0, _jsxRuntime.jsx)("button", {
           children: "Submmit"
         })]
-      }), pets.map(pet =>
+      }),
       /*#__PURE__*/
-      (0, _jsxRuntime.jsx)(_Pet.default, {
-        name: pet.name,
-        animal: pet.animal,
-        breed: pet.breed
-      }, pet.id))]
+      (0, _jsxRuntime.jsx)(_Results.default, {
+        pets: pets
+      })]
     })
   );
 };
 
 var _default = SearchParams;
 exports.default = _default;
-},{"q":"../node_modules/q/q.js","react":"../node_modules/react/index.js","./Pet":"Pet.js","./useBreedList":"useBreedList.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
+},{"q":"../node_modules/q/q.js","react":"../node_modules/react/index.js","./Pet":"Pet.js","./useBreedList":"useBreedList.js","./Results":"Results.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
