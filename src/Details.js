@@ -4,9 +4,10 @@ import { withRouter } from "react-router";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemneContext from "./ThemeContext";
+import Modal from "./Modal";
 
 class Details extends Component {
-  state = { loading: true };
+  state = { loading: true, showModal: false };
   constructor() {
     super();
   }
@@ -27,11 +28,17 @@ class Details extends Component {
     );
   }
 
+  toogleModal = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
+
+  adopt = () => (window.location = "http://bit.ly/pet-adopt");
+
   render() {
     if (this.state.loading) {
       return <h1>Loading</h1>;
     }
-    const { animal, breed, city, state, description, images, name } =
+    const { animal, breed, city, state, description, images, name, showModal } =
       this.state;
 
     return (
@@ -44,10 +51,40 @@ class Details extends Component {
           </h2>
           <ThemneContext.Consumer>
             {([theme]) => (
-              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+              <button
+                onClick={this.toogleModal}
+                style={{ backgroundColor: theme }}
+              >
+                Adopt {name}
+              </button>
             )}
           </ThemneContext.Consumer>
           <p>{description}</p>
+          {showModal ? (
+            <ThemneContext.Consumer>
+              {([theme]) => (
+                <Modal>
+                  <div>
+                    <h1>Would you like to adopt {name}</h1>
+                    <div className="buttons">
+                      <button
+                        style={{ backgroundColor: theme }}
+                        onClick={this.adopt}
+                      >
+                        Yes
+                      </button>
+                      <button
+                        style={{ backgroundColor: theme }}
+                        onClick={this.toogleModal}
+                      >
+                        No, I am a monster
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+              )}
+            </ThemneContext.Consumer>
+          ) : null}
         </div>
       </div>
     );
