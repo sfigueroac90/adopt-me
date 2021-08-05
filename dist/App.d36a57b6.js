@@ -33207,22 +33207,60 @@ const Pet = (props) => {
   ]);
 };
 */
-const Pet = props => {
+const Pet = ({
+  name,
+  animal,
+  breed,
+  images,
+  location,
+  id
+}) => {
+  let hero = 'http://pets-images.dev-apis.com/pets/none.jpg';
+
+  if (images && images.length) {
+    hero = images[0];
+  }
+
   return (
     /*#__PURE__*/
-    (0, _jsxRuntime.jsxs)("div", {
+    (0, _jsxRuntime.jsxs)("a", {
+      href: `/details/${id}`,
+      className: "pet",
       children: [
       /*#__PURE__*/
+      (0, _jsxRuntime.jsx)("div", {
+        className: "image-container",
+        children:
+        /*#__PURE__*/
+        (0, _jsxRuntime.jsx)("img", {
+          src: hero,
+          alt: name
+        })
+      }),
+      /*#__PURE__*/
+      (0, _jsxRuntime.jsxs)("div", {
+        className: "info",
+        children: [
+        /*#__PURE__*/
+        (0, _jsxRuntime.jsx)("h1", {
+          children: name
+        }),
+        /*#__PURE__*/
+        (0, _jsxRuntime.jsxs)("h2", {
+          children: [" ", `${animal} - ${breed} - ${location}`]
+        })]
+      }),
+      /*#__PURE__*/
       (0, _jsxRuntime.jsx)("h2", {
-        children: props.name
+        children: name
       }),
       /*#__PURE__*/
       (0, _jsxRuntime.jsx)("h3", {
-        children: props.animal
+        children: animal
       }),
       /*#__PURE__*/
       (0, _jsxRuntime.jsx)("h4", {
-        children: props.breed
+        children: breed
       })]
     })
   );
@@ -33302,7 +33340,7 @@ const Results = ({
             amimal: pet.animal,
             name: pet.name,
             breed: pet.breed,
-            images: pet.image,
+            images: pet.images,
             location: `${pet.city}, ${pet.state}`,
             id: pet.id
           }, pet.id)
@@ -33443,7 +33481,7 @@ exports.default = _default;
 },{"q":"../node_modules/q/q.js","react":"../node_modules/react/index.js","./Pet":"Pet.js","./useBreedList":"useBreedList.js","./Results":"Results.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
-var _react = _interopRequireDefault(require("react"));
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
@@ -33452,6 +33490,10 @@ var _SearchParams = _interopRequireDefault(require("./SearchParams"));
 var _jsxRuntime = require("react/jsx-runtime");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /* global  document */
 const App = () => {
@@ -33471,7 +33513,11 @@ const App = () => {
 
 _reactDom.default.render(
 /*#__PURE__*/
-(0, _jsxRuntime.jsx)(App, {}), document.getElementById("root"));
+(0, _jsxRuntime.jsx)(_react.StrictMode, {
+  children:
+  /*#__PURE__*/
+  (0, _jsxRuntime.jsx)(App, {})
+}), document.getElementById("root"));
 },{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SearchParams":"SearchParams.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -33500,7 +33546,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50189" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50080" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
