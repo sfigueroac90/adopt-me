@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import ThemeContext from "./ThemeContext";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
 
@@ -12,6 +13,7 @@ const SearchParams = () => {
   const [breed, setBreed] = useState("");
   const [breeds, status] = useBreedList(animal);
   const [pets, setPets] = useState([]);
+  const [theme, setTheme] = useContext(ThemeContext);
 
   useEffect(() => {
     requestPets();
@@ -37,6 +39,7 @@ const SearchParams = () => {
         <label htmlFor="location">
           <input
             id="location"
+            // eslint-disable-next-line no-unused-vars
             onCut={(e) => console.log("Cutted")}
             value={location}
             onChange={(e) => setLocation(e.target.value)}
@@ -73,7 +76,24 @@ const SearchParams = () => {
             /
           </select>
         </label>
-        <button>Submmit</button>
+        <label htmlFor="theme">
+          Theme
+          <select
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            onBlur={(e) => setTheme(e.target.value)}
+          >
+            <option value="darkblue">Dark Blue</option>
+            <option value="red">Red</option>
+            <option value="Pink">Pink</option>
+            <option value="Peru">Peru</option>
+            <option value="chartreuse">Chartreuse</option>
+            <option value="mediumorchid">Medium Orchid</option>
+            <option value="darkred">Dark Red</option>
+            <option value="gray">Gray</option>
+          </select>
+        </label>
+        <button style={{ backgroundColor: theme }}>Submmit</button>
       </form>
       <Results pets={pets} />
     </div>

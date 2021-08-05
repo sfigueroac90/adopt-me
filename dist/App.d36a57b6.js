@@ -29566,7 +29566,22 @@ if ("development" === 'production') {
 } else {
   module.exports = require('./cjs/react-dom.development.js');
 }
-},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"useBreedList.js":[function(require,module,exports) {
+},{"./cjs/react-dom.development.js":"../node_modules/react-dom/cjs/react-dom.development.js"}],"ThemeContext.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = require("react");
+
+const theme =
+/*#__PURE__*/
+(0, _react.createContext)(["dark", () => {}]);
+var _default = theme;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"useBreedList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35095,6 +35110,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _ThemeContext = _interopRequireDefault(require("./ThemeContext"));
+
 var _useBreedList = _interopRequireDefault(require("./useBreedList"));
 
 var _Results = _interopRequireDefault(require("./Results"));
@@ -35116,6 +35133,7 @@ const SearchParams = () => {
   const [breed, setBreed] = (0, _react.useState)("");
   const [breeds, status] = (0, _useBreedList.default)(animal);
   const [pets, setPets] = (0, _react.useState)([]);
+  const [theme, setTheme] = (0, _react.useContext)(_ThemeContext.default);
   (0, _react.useEffect)(() => {
     requestPets();
   }, []); //eslint-disable-line react-hooks/exhaustive-deps
@@ -35146,7 +35164,8 @@ const SearchParams = () => {
           children:
           /*#__PURE__*/
           (0, _jsxRuntime.jsx)("input", {
-            id: "location",
+            id: "location" // eslint-disable-next-line no-unused-vars
+            ,
             onCut: e => console.log("Cutted"),
             value: location,
             onChange: e => setLocation(e.target.value),
@@ -35196,7 +35215,62 @@ const SearchParams = () => {
           })]
         }),
         /*#__PURE__*/
+        (0, _jsxRuntime.jsxs)("label", {
+          htmlFor: "theme",
+          children: ["Theme",
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsxs)("select", {
+            value: theme,
+            onChange: e => setTheme(e.target.value),
+            onBlur: e => setTheme(e.target.value),
+            children: [
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "darkblue",
+              children: "Dark Blue"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "red",
+              children: "Red"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "Pink",
+              children: "Pink"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "Peru",
+              children: "Peru"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "chartreuse",
+              children: "Chartreuse"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "mediumorchid",
+              children: "Medium Orchid"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "darkred",
+              children: "Dark Red"
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)("option", {
+              value: "gray",
+              children: "Gray"
+            })]
+          })]
+        }),
+        /*#__PURE__*/
         (0, _jsxRuntime.jsx)("button", {
+          style: {
+            backgroundColor: theme
+          },
           children: "Submmit"
         })]
       }),
@@ -35210,7 +35284,7 @@ const SearchParams = () => {
 
 var _default = SearchParams;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./useBreedList":"useBreedList.js","./Results":"Results.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"Carousel.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./ThemeContext":"ThemeContext.js","./useBreedList":"useBreedList.js","./Results":"Results.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"Carousel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35385,6 +35459,8 @@ var _Carousel = _interopRequireDefault(require("./Carousel"));
 
 var _ErrorBoundary = _interopRequireDefault(require("./ErrorBoundary"));
 
+var _ThemeContext = _interopRequireDefault(require("./ThemeContext"));
+
 var _jsxRuntime = require("react/jsx-runtime");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -35431,7 +35507,6 @@ class Details extends _react.Component {
       images,
       name
     } = this.state;
-    throw new Error("lol it broke");
     return (
       /*#__PURE__*/
       (0, _jsxRuntime.jsxs)("div", {
@@ -35453,8 +35528,15 @@ class Details extends _react.Component {
             children: [animal, " - ", breed, " - ", city, ", ", state]
           }),
           /*#__PURE__*/
-          (0, _jsxRuntime.jsxs)("button", {
-            children: ["Adopt ", name]
+          (0, _jsxRuntime.jsx)(_ThemeContext.default.Consumer, {
+            children: ([theme]) =>
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsxs)("button", {
+              style: {
+                backgroundColor: theme
+              },
+              children: ["Adopt ", name]
+            })
           }),
           /*#__PURE__*/
           (0, _jsxRuntime.jsx)("p", {
@@ -35485,7 +35567,7 @@ function DetailsWithErrorBoundary() {
     })
   );
 }
-},{"react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./Carousel":"Carousel.js","./ErrorBoundary":"ErrorBoundary.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./Carousel":"Carousel.js","./ErrorBoundary":"ErrorBoundary.js","./ThemeContext":"ThemeContext.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
@@ -35498,6 +35580,8 @@ var _reactRouterDom = require("react-router-dom");
 
 var _Details = _interopRequireDefault(require("./Details"));
 
+var _ThemeContext = _interopRequireDefault(require("./ThemeContext"));
+
 var _jsxRuntime = require("react/jsx-runtime");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -35508,40 +35592,46 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 /* global  document */
 const App = () => {
+  const theme = (0, _react.useState)("red");
   return (
     /*#__PURE__*/
-    (0, _jsxRuntime.jsx)("div", {
+    (0, _jsxRuntime.jsx)(_ThemeContext.default.Provider, {
+      value: theme,
       children:
       /*#__PURE__*/
-      (0, _jsxRuntime.jsxs)(_reactRouterDom.BrowserRouter, {
-        children: [
+      (0, _jsxRuntime.jsx)("div", {
+        children:
         /*#__PURE__*/
-        (0, _jsxRuntime.jsx)(_reactRouterDom.Link, {
-          to: "/",
-          children:
-          /*#__PURE__*/
-          (0, _jsxRuntime.jsx)("h1", {
-            children: "Adopt Me"
-          })
-        }),
-        /*#__PURE__*/
-        (0, _jsxRuntime.jsxs)(_reactRouterDom.Switch, {
+        (0, _jsxRuntime.jsxs)(_reactRouterDom.BrowserRouter, {
           children: [
           /*#__PURE__*/
-          (0, _jsxRuntime.jsx)(_reactRouterDom.Route, {
-            path: "/details/:id",
+          (0, _jsxRuntime.jsx)(_reactRouterDom.Link, {
+            to: "/",
             children:
             /*#__PURE__*/
-            (0, _jsxRuntime.jsx)(_Details.default, {})
+            (0, _jsxRuntime.jsx)("h1", {
+              children: "Adopt Me"
+            })
           }),
           /*#__PURE__*/
-          (0, _jsxRuntime.jsx)(_reactRouterDom.Route, {
-            path: "/",
-            children:
+          (0, _jsxRuntime.jsxs)(_reactRouterDom.Switch, {
+            children: [
             /*#__PURE__*/
-            (0, _jsxRuntime.jsx)(_SearchParams.default, {})
+            (0, _jsxRuntime.jsx)(_reactRouterDom.Route, {
+              path: "/details/:id",
+              children:
+              /*#__PURE__*/
+              (0, _jsxRuntime.jsx)(_Details.default, {})
+            }),
+            /*#__PURE__*/
+            (0, _jsxRuntime.jsx)(_reactRouterDom.Route, {
+              path: "/",
+              children:
+              /*#__PURE__*/
+              (0, _jsxRuntime.jsx)(_SearchParams.default, {})
+            })]
           })]
-        })]
+        })
       })
     })
   );
@@ -35554,7 +35644,7 @@ _reactDom.default.render(
   /*#__PURE__*/
   (0, _jsxRuntime.jsx)(App, {})
 }), document.getElementById("root"));
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SearchParams":"SearchParams.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./Details":"Details.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","./SearchParams":"SearchParams.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./Details":"Details.js","./ThemeContext":"ThemeContext.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemneContext from "./ThemeContext";
 
 class Details extends Component {
   state = { loading: true };
@@ -33,8 +34,6 @@ class Details extends Component {
     const { animal, breed, city, state, description, images, name } =
       this.state;
 
-    throw new Error("lol it broke");
-
     return (
       <div className="details">
         <Carousel images={images} />
@@ -43,7 +42,11 @@ class Details extends Component {
           <h2>
             {animal} - {breed} - {city}, {state}
           </h2>
-          <button>Adopt {name}</button>
+          <ThemneContext.Consumer>
+            {([theme]) => (
+              <button style={{ backgroundColor: theme }}>Adopt {name}</button>
+            )}
+          </ThemneContext.Consumer>
           <p>{description}</p>
         </div>
       </div>
