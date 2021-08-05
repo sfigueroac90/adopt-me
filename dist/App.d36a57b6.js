@@ -37626,22 +37626,80 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-var _react = require("react");
+var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouter = require("react-router");
 
 var _jsxRuntime = require("react/jsx-runtime");
 
-const Details = () => {
-  return (
-    /*#__PURE__*/
-    (0, _jsxRuntime.jsx)("h2", {
-      children: "hi lololol"
-    })
-  );
-};
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-var _default = Details;
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class Details extends _react.Component {
+  constructor() {
+    super();
+    this.state = {
+      loading: true
+    };
+  }
+
+  async componentDidMount() {
+    const res = await fetch(`http://pets-v2.dev-apis.com/pets?id=${this.props.match.params.id}`);
+    const json = await res.json();
+    this.setState(Object.assign({
+      loading: false
+    }, json.pets[0]));
+  }
+
+  render() {
+    const {
+      animal,
+      breed,
+      city,
+      state,
+      description,
+      name
+    } = this.state;
+    return (
+      /*#__PURE__*/
+      (0, _jsxRuntime.jsx)("div", {
+        className: "details",
+        children:
+        /*#__PURE__*/
+        (0, _jsxRuntime.jsxs)("div", {
+          children: [
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsx)("h1", {
+            children: name
+          }),
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsxs)("h2", {
+            children: [animal, " - ", breed, " - ", city, ", ", state]
+          }),
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsxs)("button", {
+            children: ["Adopt ", name]
+          }),
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsx)("p", {
+            children: description
+          })]
+        })
+      })
+    );
+  }
+
+}
+/*
+const Details = () => {
+  return <h2>hi lololol</h2>;
+};
+*/
+
+
+var _default = (0, _reactRouter.withRouter)(Details);
+
 exports.default = _default;
 },{"react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
 "use strict";
@@ -37740,7 +37798,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53560" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55475" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
