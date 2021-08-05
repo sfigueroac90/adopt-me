@@ -35229,11 +35229,17 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 class Carousel extends _react.Component {
-  constructor(...args) {
-    super(...args);
+  constructor() {
+    super();
 
     _defineProperty(this, "state", {
       active: 0
+    });
+
+    _defineProperty(this, "handleIndexClick", event => {
+      this.setState({
+        active: parseInt(event.target.dataset.index)
+      });
     });
   }
 
@@ -35260,8 +35266,11 @@ class Carousel extends _react.Component {
           children: images.map((photo, index) => {
             return (
               /*#__PURE__*/
+              //eslint-disable-next-line
               (0, _jsxRuntime.jsx)("img", {
                 src: photo,
+                "data-index": index,
+                onClick: this.handleIndexClick,
                 className: index === active ? "active" : "",
                 alt: "images"
               }, photo)
