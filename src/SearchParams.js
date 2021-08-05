@@ -1,11 +1,10 @@
-import { async } from "q";
+/* eslint-disable no-undef */
+import React from "react";
 import { useEffect, useState } from "react";
-import Pet from "./Pet"
 import useBreedList from "./useBreedList";
 import Results from "./Results";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
-
 
 const SearchParams = () => {
   const [location, setLocation] = useState("");
@@ -13,36 +12,32 @@ const SearchParams = () => {
   const [breed, setBreed] = useState("");
   const [breeds, status] = useBreedList(animal);
   const [pets, setPets] = useState([]);
-  
-  useEffect(()=>{
-    requestPets();
-  },[])
 
-  async function requestPets(){
+  useEffect(() => {
+    requestPets();
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
+
+  async function requestPets() {
     const dir = `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`;
-    console.log("Dir:" + dir)
-    const res = await fetch(dir)
+    const res = await fetch(dir);
     const json = await res.json();
-    console.log(json)
     setPets(json.pets);
   }
 
   const isRaining = location === "Seattle, WA" ? "Raining" : "Not raining";
   return (
     <div className="search-params">
-      {isRaining} - {status} 
+      {isRaining} - {status}
       <form
-        onSubmit={
-          e => {
-            e.preventDefault();
-            requestPets();
-          }
-        }
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestPets();
+        }}
       >
         <label htmlFor="location">
           <input
             id="location"
-            onCut={e => console.log("Cutted")}
+            onCut={(e) => console.log("Cutted")}
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             placeholder="Location"
@@ -81,9 +76,6 @@ const SearchParams = () => {
         <button>Submmit</button>
       </form>
       <Results pets={pets} />
-
-
-      
     </div>
   );
 };
