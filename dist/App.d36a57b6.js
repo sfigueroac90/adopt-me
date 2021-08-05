@@ -35314,7 +35314,8 @@ class ErrorBoundary extends _react.Component {
     super(...args);
 
     _defineProperty(this, "state", {
-      hasError: false
+      hasError: false,
+      redirect: false
     });
   }
 
@@ -35327,9 +35328,26 @@ class ErrorBoundary extends _react.Component {
   componentDidCatch(error, info) {
     //I would log this to Sentry, Azure, Monitor, New Relic, TrackJS
     console.error("ErrorBoundary caught an error", error, info);
+
+    if (this.state.hasError) {
+      setTimeout(() => {
+        this.setState({
+          redirect: TextTrackCue
+        });
+      }, 5000);
+    }
   }
 
   render() {
+    if (this.state.redirect) {
+      return (
+        /*#__PURE__*/
+        (0, _jsxRuntime.jsx)(_reactRouterDom.Redirect, {
+          to: "/"
+        })
+      );
+    }
+
     if (this.state.hasError) {
       return (
         /*#__PURE__*/

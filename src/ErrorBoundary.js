@@ -1,10 +1,10 @@
 /* eslint-disable no-undef */
 //mostly look this from the React docs
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class ErrorBoundary extends Component {
-  state = { hasError: false };
+  state = { hasError: false, redirect: false };
   static getDerivedStateFromError() {
     return { hasError: true };
   }
@@ -12,9 +12,18 @@ class ErrorBoundary extends Component {
   componentDidCatch(error, info) {
     //I would log this to Sentry, Azure, Monitor, New Relic, TrackJS
     console.error("ErrorBoundary caught an error", error, info);
+    if (this.state.hasError) {
+      setTimeout(() => {
+        this.setState({ redirect: TextTrackCue });
+      }, 5000);
+    }
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
+
     if (this.state.hasError) {
       return (
         <h2>
