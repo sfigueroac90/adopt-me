@@ -35289,7 +35289,7 @@ _defineProperty(Carousel, "defaultProps", {
 
 var _default = Carousel;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"Details.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"ErrorBoundary.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35299,9 +35299,73 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
+var _jsxRuntime = require("react/jsx-runtime");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+class ErrorBoundary extends _react.Component {
+  constructor(...args) {
+    super(...args);
+
+    _defineProperty(this, "state", {
+      hasError: false
+    });
+  }
+
+  static getDerivedStateFromError() {
+    return {
+      hasError: true
+    };
+  }
+
+  componentDidCatch(error, info) {
+    //I would log this to Sentry, Azure, Monitor, New Relic, TrackJS
+    console.error("ErrorBoundary caught an error", error, info);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        /*#__PURE__*/
+        (0, _jsxRuntime.jsxs)("h2", {
+          children: ["This listing has an error.", " ",
+          /*#__PURE__*/
+          (0, _jsxRuntime.jsx)(_reactRouterDom.Link, {
+            to: "/",
+            children: " Click here to bo back to the home page"
+          })]
+        })
+      );
+    }
+
+    return this.props.children;
+  }
+
+}
+
+var _default = ErrorBoundary;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"Details.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = DetailsWithErrorBoundary;
+
+var _react = _interopRequireWildcard(require("react"));
+
 var _reactRouter = require("react-router");
 
 var _Carousel = _interopRequireDefault(require("./Carousel"));
+
+var _ErrorBoundary = _interopRequireDefault(require("./ErrorBoundary"));
 
 var _jsxRuntime = require("react/jsx-runtime");
 
@@ -35349,6 +35413,7 @@ class Details extends _react.Component {
       images,
       name
     } = this.state;
+    throw new Error("lol it broke");
     return (
       /*#__PURE__*/
       (0, _jsxRuntime.jsxs)("div", {
@@ -35390,10 +35455,19 @@ const Details = () => {
 */
 
 
-var _default = (0, _reactRouter.withRouter)(Details);
+const DetailsWithRouter = (0, _reactRouter.withRouter)(Details);
 
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./Carousel":"Carousel.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
+function DetailsWithErrorBoundary() {
+  return (
+    /*#__PURE__*/
+    (0, _jsxRuntime.jsx)(_ErrorBoundary.default, {
+      children:
+      /*#__PURE__*/
+      (0, _jsxRuntime.jsx)(DetailsWithRouter, {})
+    })
+  );
+}
+},{"react":"../node_modules/react/index.js","react-router":"../node_modules/react-router/esm/react-router.js","./Carousel":"Carousel.js","./ErrorBoundary":"ErrorBoundary.js","react/jsx-runtime":"../node_modules/react/jsx-runtime.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireWildcard(require("react"));
