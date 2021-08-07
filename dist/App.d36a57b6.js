@@ -35085,7 +35085,7 @@ const Results = ({
         return (
           /*#__PURE__*/
           (0, _jsxRuntime.jsx)(_Pet.default, {
-            amimal: pet.animal,
+            animal: pet.animal,
             name: pet.name,
             breed: pet.breed,
             images: pet.images,
@@ -35767,7 +35767,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52371" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51994" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
